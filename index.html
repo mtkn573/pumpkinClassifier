@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pumpkinClassifier</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:flex-end;height:100%;">
+        <div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;">
+            <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
+                <img id="pumpkin" style="width:25%;display:none;justify-content:center;align-items:center;"src="pumpkin.png">
+            </div>
+            <div id="size"style="width:100%;display:flex;justify-content:center;align-items:center;"></div>
+            <div style="display:flex;">
+                
+                <input id="weightInput" type="number"
+                style="border-color:rgba(255,140,0,1);width:100%;height:100%px;" min="1" step="1">
+            </div>
+        </div>
+    </div>
+    <script src="pumpkin.js"></script>
+    <script>
+        isAndroid=/Android/i.test(navigator.userAgent)
+        isIos=/iPad|iPhone|iPod/.test(navigator.platform)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)
+        if(!isAndroid&&!isIos){
+            document.body.innerHTML="using app is i guess available on devices with ios or android."
+            document.body.style.fontSize="30px"
+            document.body.style.display="flex"
+            document.body.style.justifyContent="center"
+            document.body.style.alignItems="center"
+        }else{
+            document.getElementById(`weightInput`).addEventListener(`input`,function(){
+                if(weighPumpkin(parseInt(this.value))=="Mini"){
+                    document.getElementById(`pumpkin`).style.display="flex"
+                    document.getElementById(`pumpkin`).style.width="12%"
+                    document.getElementById(`size`).textContent="Mini"
+                }
+                if(weighPumpkin(parseInt(this.value))=="Carving"){
+                    document.getElementById(`pumpkin`).style.display="flex"
+                    document.getElementById(`pumpkin`).style.width="25%"
+                    document.getElementById(`size`).textContent="Carving"
+                }
+                if(weighPumpkin(parseInt(this.value))=="Giant"){
+                    document.getElementById(`pumpkin`).style.display="flex"
+                    document.getElementById(`pumpkin`).style.width="50%"
+                    document.getElementById(`size`).textContent="Giant"
+                }
+                if(weighPumpkin(parseInt(this.value))=="Record Breaker!"){
+                    document.getElementById(`pumpkin`).style.display="flex"
+                    document.getElementById(`pumpkin`).style.width="75%"
+                    document.getElementById(`size`).textContent="Record Breaker!"
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
