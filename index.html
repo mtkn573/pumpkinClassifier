@@ -67,6 +67,7 @@
         <div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;">
             <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
                 <img id="pumpkin" style="width:25%;display:none;justify-content:center;align-items:center;"src="pumpkin.png">
+                <img id="crowd"src="crowd.png"style="height:150px;display:none;">
             </div>
             <div id="size"style="width:100%;display:flex;justify-content:center;align-items:center;"></div>
             <div style="display:flex;">
@@ -88,6 +89,18 @@
     <script src="pumpkin.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/decimal.js@latest/decimal.min.js"></script>
     <script>
+        music=new Audio(`applause.mp3`)
+        function playMusic(){
+            music.play()
+            music.addEventListener(`ended`, function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+        }
+        function stopMusic(){
+            music.pause()
+            music.currentTime=0
+        }
         isAndroid=/Android/i.test(navigator.userAgent)
         isIos=/iPad|iPhone|iPod/.test(navigator.platform)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)
         isInKilograms=true
@@ -102,6 +115,8 @@
                 if(this.value==""){
                     document.getElementById(`pumpkin`).style.display="none"
                     document.getElementById(`size`).textContent=""
+                    document.getElementById(`crowd`).style.display="none"
+                    stopMusic()
                     return
                 }
                 weight=parseFloat(this.value)
@@ -112,21 +127,29 @@
                     document.getElementById(`pumpkin`).style.display="flex"
                     document.getElementById(`pumpkin`).style.width="12%"
                     document.getElementById(`size`).textContent="Mini"
+                    document.getElementById(`crowd`).style.display="none"
+                    stopMusic()
                 }
                 if(weighPumpkin(weight)=="Carving"){
                     document.getElementById(`pumpkin`).style.display="flex"
                     document.getElementById(`pumpkin`).style.width="25%"
                     document.getElementById(`size`).textContent="Carving"
+                    document.getElementById(`crowd`).style.display="none"
+                    stopMusic()
                 }
                 if(weighPumpkin(weight)=="Giant"){
                     document.getElementById(`pumpkin`).style.display="flex"
                     document.getElementById(`pumpkin`).style.width="50%"
                     document.getElementById(`size`).textContent="Giant"
+                    document.getElementById(`crowd`).style.display="none"
+                    stopMusic()
                 }
                 if(weighPumpkin(weight)=="Record Breaker!"){
                     document.getElementById(`pumpkin`).style.display="flex"
                     document.getElementById(`pumpkin`).style.width="75%"
                     document.getElementById(`size`).textContent="Record Breaker!"
+                    document.getElementById(`crowd`).style.display="flex"
+                    playMusic()
                 }
             })
         }
@@ -140,8 +163,10 @@
             if(document.getElementById(`weightInput`).value==""){
                 document.getElementById(`pumpkin`).style.display="none"
                 document.getElementById(`size`).textContent=""
-                return
-            }
+                document.getElementById(`crowd`).style.display="none"
+                stopMusic()
+                    return
+                }
             weight=parseFloat(document.getElementById(`weightInput`).value)
             if(isInKilograms){
                 weight=Decimal(weight).times(2.205)
@@ -150,23 +175,38 @@
                 document.getElementById(`pumpkin`).style.display="flex"
                 document.getElementById(`pumpkin`).style.width="12%"
                 document.getElementById(`size`).textContent="Mini"
+                document.getElementById(`crowd`).style.display="none"
+                stopMusic()
             }
             if(weighPumpkin(weight)=="Carving"){
                 document.getElementById(`pumpkin`).style.display="flex"
                 document.getElementById(`pumpkin`).style.width="25%"
                 document.getElementById(`size`).textContent="Carving"
+                document.getElementById(`crowd`).style.display="none"
+                stopMusic()
             }
             if(weighPumpkin(weight)=="Giant"){
                 document.getElementById(`pumpkin`).style.display="flex"
                 document.getElementById(`pumpkin`).style.width="50%"
                 document.getElementById(`size`).textContent="Giant"
+                document.getElementById(`crowd`).style.display="none"
+                stopMusic()
             }
             if(weighPumpkin(weight)=="Record Breaker!"){
                 document.getElementById(`pumpkin`).style.display="flex"
                 document.getElementById(`pumpkin`).style.width="75%"
                 document.getElementById(`size`).textContent="Record Breaker!"
+                document.getElementById(`crowd`).style.display="flex"
+                playMusic();
             }
         })
+        setInterval(function(){
+            if(document.getElementById(`crowd`).getAttribute(`src`)=="crowd.png"){
+                document.getElementById(`crowd`).src="crowd2.png"
+            }else{
+                document.getElementById(`crowd`).src="crowd.png"
+            }
+        },100)
     </script>
 </body>
 
